@@ -1,0 +1,14 @@
+<h7>
+  <strong>Name:</strong>
+  <%= @member.name %>
+</h7><br>
+
+<h7>
+  <strong>Email:</strong>
+  <%= @member.email %>
+</h7><br>
+
+
+
+<%= link_to 'Edit', edit_member_path(@member) %> |
+<%= link_to 'Back', members_path %>
