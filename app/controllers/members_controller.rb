@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   before_action :signed_in_member, only: [:index, :edit, :update, :destroy]
   
   def show
-    @member = Member.find(params[:id])
+    @member = Member.find params[:id]
   end
   def new
     @member = Member.new
@@ -28,11 +28,6 @@ class MembersController < ApplicationController
     else
       render 'edit'
     end
-  end
-  def destroy
-    @member = Member.find(params[:id]).destroy
-    flash[:success] = "Member deleted."
-    redirect_to members_url
   end
 
   private

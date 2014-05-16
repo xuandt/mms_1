@@ -4,13 +4,13 @@ class Admin::MembersController < ApplicationController
   before_action :admin_member,     only: :destroy
 
   def show
-    @member = Member.find(params[:id])
+    @member = Member.find params[:id]
   end
   def new
     @member = Member.new
   end
   def create
-    @member = Member.new(member_params)
+    @member = Member.new member_params
     if @member.save
        flash[:success] = "Signup successfully"
        redirect_to @member
