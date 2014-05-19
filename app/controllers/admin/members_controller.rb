@@ -1,6 +1,8 @@
-class MembersController < ApplicationController
+class Admin::MembersController < ApplicationController
+  include SessionsHelper
   before_action :signed_in_member, only: [:index, :edit, :update, :destroy]
-  
+  before_action :admin_member,     only: :destroy
+
   def show
     @member = Member.find params[:id]
   end
@@ -8,7 +10,7 @@ class MembersController < ApplicationController
     @member = Member.new
   end
   def create
-    @member = Member.new(member_params)
+    @member = Member.new member_params
     if @member.save
        flash[:success] = "Signup successfully"
        redirect_to @member
@@ -21,7 +23,7 @@ class MembersController < ApplicationController
     @member = Member.find params[:id]
   end
   def update
-    @member = Member.find params[:id]
+  	@member = Member.find params[:id]
     if @member.update_attributes member_params
       flash[:success] = "Profile updated"
       redirect_to @member
@@ -29,7 +31,11 @@ class MembersController < ApplicationController
       render 'edit'
     end
   end
-
+  def destroy
+    @member = Member.find(params[:id]).destroy
+    flash[:success] = "Member deleted."
+    redirect_to admin_members_url
+  end
   private
     def signed_in_member
       unless signed_in?
@@ -37,7 +43,10 @@ class MembersController < ApplicationController
         redirect_to signin_url, notice: "Please sign in."
       end
     end
+    def admin_member
+      redirect_to(root_url) unless current_member.admin?
+    end
     def member_params
       params.require(:member).permit(:name, :email, :password, :password_confirmation)
     end
-end
+  end
