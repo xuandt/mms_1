@@ -3,10 +3,10 @@ module Admin::SessionsHelper
     remember_token = Member.new_remember_token
     cookies.permanent[:remember_token] = remember_token
     member.update_attribute(:remember_token, Member.digest(remember_token))
-    self.current_member = member
+    self.current_member = admin_member
   end
   def current_member=(member)
-    @current_member = member
+    @current_member = admin_member
   end
   def current_member
     remember_token = Member.digest(cookies[:remember_token])
@@ -41,19 +41,5 @@ module Admin::SessionsHelper
   end
   def admin_member
     current_member.admin
-  end
-   def update
-    @member = Member.find params[:id]
-    if @member.update_attributes member_params
-      flash[:success] = "Profile updated"
-      redirect_to @member
-    else
-      render 'edit'
-    end
-  end
-  def destroy
-    @member = Member.find(params[:id]).destroy
-    flash[:success] = "Member deleted."
-    redirect_to admin_members_url
   end
 end

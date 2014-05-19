@@ -3,5 +3,9 @@
 end
 
 (1..3).each do |i|
-  Member.create(name: "Admin{i}", email: "admin#{i}@example.com", birthday: "12-01-1989", password: "123456", password_confirmation: "123456", admin: '1')
+  Member.create(name: "Admin#{i}", email: "admin#{i}@example.com", birthday: "12-01-1989", password: "123456", password_confirmation: "123456", admin: '1')
+end
+
+(1..5).each do |i|
+	Position.create(name: "Position#{i}", name: "PositionName#{i}", short_name: "PN#{i}")
 end
