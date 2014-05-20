@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140514043227) do
+ActiveRecord::Schema.define(version: 20140519073929) do
 
   create_table "members", force: true do |t|
     t.string   "name"
@@ -27,7 +27,14 @@ ActiveRecord::Schema.define(version: 20140514043227) do
     t.string   "remember_token"
   end
 
-  add_index "members", ["email"], name: "index_members_on_email", unique: true
-  add_index "members", ["remember_token"], name: "index_members_on_remember_token"
+  add_index "members", ["email"], name: "index_members_on_email", unique: true, using: :btree
+  add_index "members", ["remember_token"], name: "index_members_on_remember_token", using: :btree
+
+  create_table "positions", force: true do |t|
+    t.string   "name"
+    t.string   "short_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

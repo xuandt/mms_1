@@ -14,22 +14,7 @@ class MembersController < ApplicationController
        redirect_to @member
     end
   end
-  def index
-    @members = Member.all
-  end
-  def edit
-    @member = Member.find params[:id]
-  end
-  def update
-    @member = Member.find params[:id]
-    if @member.update_attributes member_params
-      flash[:success] = "Profile updated"
-      redirect_to @member
-    else
-      render 'edit'
-    end
-  end
-
+  
   private
     def signed_in_member
       unless signed_in?

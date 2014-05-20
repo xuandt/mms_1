@@ -21,6 +21,7 @@ class Admin::MembersController < ApplicationController
   end
   def edit
     @member = Member.find params[:id]
+    @members = Member.paginate page: params[:page]
   end
   def update
   	@member = Member.find params[:id]
