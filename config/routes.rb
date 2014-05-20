@@ -2,13 +2,15 @@ Rails.application.routes.draw do
   resources :members
   resources :sessions, only: [:new, :create, :destroy]
   resources :positions
-
+  resources :projects
+  
   root  'homepage#home'
   match '/signup',  to: 'members#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   namespace :admin do
+    resources :projects
     resources :members
     resources :sessions, only: [:new, :create, :destroy]
     resources :positions

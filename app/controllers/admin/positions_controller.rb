@@ -1,5 +1,4 @@
 class Admin::PositionsController < ApplicationController
-
   def show
 	@position = Position.find params[:id]
   end
