@@ -1,0 +1,33 @@
+<% provide(:title, 'List Projects') %>
+<h1>List Projects</h1>
+<div id="search">
+  <%= render :partial => 'admin/projects/search' %>
+</div>
+  <ul class="projects">
+    
+    <table>
+     <thead>
+      <tr>
+      <th>Name</th>
+      <th>Short name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      </tr>
+     </thead>
+
+     <tbody>
+      <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.name %></td>
+        <td><%= project.shortname %></td>
+        <td><%= link_to 'Show', [:admin, project] %></td>
+        <td><%= link_to 'Edit', edit_admin_project_path(project) %></td>
+        <td><%= link_to 'Destroy', [:admin, project], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>
+     </tbody>
+    </table>   
+   
+  </ul>
