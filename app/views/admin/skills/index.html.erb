@@ -1,0 +1,35 @@
+<% provide(:title, 'List skills') %>
+<h1>List skills</h1>
+
+  <ul class="skills">
+    
+    <table>
+     <thead>
+      <tr>
+      <th>Name</th>
+      <th>Level</th>
+      <th>Used years</th>
+      <th>Member</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      </tr>
+     </thead>
+
+     <tbody>
+      <% @skills.each do |skill| %>
+      <tr>
+        <td><%= skill.name %></td>
+        <td><%= skill.level %></td>
+        <td><%= skill.used_years %></td>
+        <td><%= skill.member_id %></td>
+        <td><%= link_to 'Show', [:admin, skill] %></td>
+        <td><%= link_to 'Edit', edit_admin_skill_path(skill) %></td>
+        <td><%= link_to 'Destroy', [:admin, skill], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+      <% end %>
+     </tbody>
+    </table>   
+   
+  </ul>
