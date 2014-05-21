@@ -4,6 +4,9 @@ end
 
 (1..3).each do |i|
   Member.create(name: "Admin#{i}", email: "admin#{i}@example.com", birthday: "12-01-1989", password: "123456", password_confirmation: "123456", admin: '1')
+  (1..5).each do |j|
+	Skill.create(name: "Skill#{j}", member_id: i, level: j, used_years: j)
+  end	
 end
 
 (1..5).each do |i|

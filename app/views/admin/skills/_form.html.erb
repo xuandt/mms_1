@@ -1,0 +1,23 @@
+<%= form_for @skill do |f| %>
+
+ <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :member_id %><br>
+    <%= f.text_field :member_id %>
+  </div>
+  <div class="field">
+    <%= f.label :level %>
+    <%= f.text_field :level %><br>
+  </div>
+  <div class="field">
+    <%= f.label :used_years %><br>
+    <%= f.text_field :used_years %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

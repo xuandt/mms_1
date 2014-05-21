@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   resources :members
   resources :sessions, only: [:new, :create, :destroy]
   resources :positions
-  resources :projects
   
   root  'homepage#home'
   match '/signup',  to: 'members#new',            via: 'get'
@@ -10,6 +9,7 @@ Rails.application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   namespace :admin do
+    resources :skills
     resources :projects
     resources :members
     resources :sessions, only: [:new, :create, :destroy]
