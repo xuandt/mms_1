@@ -1,6 +1,5 @@
 class Admin::MembersController < ApplicationController
   include SessionsHelper
-  before_action :signed_in_member, only: [:index, :edit, :update, :destroy]
   before_action :admin_member,     only: :destroy
 
   def show
@@ -13,11 +12,16 @@ class Admin::MembersController < ApplicationController
     @member = Member.new member_params
     if @member.save
        flash[:success] = "Signup successfully"
-       redirect_to @member
+       redirect_to admin_member_path
     end
   end
   def index
-    @members = Member.all
+    if params[:team_id]
+      team = Team.find params[:team_id]
+      @members = team.members.paginate page: params[:page]
+    else
+      @members = Member.paginate page: params[:page]
+    end
   end
   def edit
     @member = Member.find params[:id]
@@ -27,7 +31,7 @@ class Admin::MembersController < ApplicationController
   	@member = Member.find params[:id]
     if @member.update_attributes member_params
       flash[:success] = "Profile updated"
-      redirect_to @member
+      redirect_to admin_member_path
     else
       render 'edit'
     end
@@ -38,12 +42,6 @@ class Admin::MembersController < ApplicationController
     redirect_to admin_members_url
   end
   private
-    def signed_in_member
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in."
-      end
-    end
     def admin_member
       redirect_to(root_url) unless current_member.admin?
     end

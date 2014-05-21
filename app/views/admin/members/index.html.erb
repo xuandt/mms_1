@@ -1,4 +1,7 @@
 <h1>Listing members</h1>
+<div id="search">
+  <%= render :partial => 'admin/members/search' %>
+</div>
 
 <table>
   <thead>
@@ -27,3 +30,4 @@
 <br>
 
 <%= link_to 'New Member', new_member_path %>
+<%= will_paginate @members %>

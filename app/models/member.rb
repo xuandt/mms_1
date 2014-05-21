@@ -1,5 +1,6 @@
 class Member < ActiveRecord::Base
   has_many :skills
+  belongs_to :team
   before_save { self.email = email.downcase }
   attr_accessor :not_validate_password
   before_create :create_remember_token
