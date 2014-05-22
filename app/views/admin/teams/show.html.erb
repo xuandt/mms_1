@@ -1,0 +1,24 @@
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h7>
+         <strong>Name:</strong>
+         <%= @team.name %>
+      </h7><br>
+
+      <h7>
+         <strong>Description:</strong>
+         <%= @team.description%>
+      </h7><br>
+
+      <h7>
+         <strong>Teamleader:</strong>
+         <%= @team.teamleader %>
+      </h7><br>  
+    </section>
+  </aside>
+</div>
+<h7><strong>Members of team</strong></h7><br>
+<% @team.members.each do |member| %>
+  <%= member.name %><br>
+<% end %>      

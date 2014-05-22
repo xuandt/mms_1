@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   match '/signout', to: 'sessions#destroy',     via: 'delete'
 
   namespace :admin do
+    resources :teams
     resources :skills
     resources :projects
     resources :members

@@ -1,0 +1,10 @@
+<%= form_tag(admin_members_path, :method => "get", id: "search-form") do |f| %>
+  <table>
+    <tr>
+      <td>
+        Team <%= select_tag 'team_id', options_from_collection_for_select(Team.all, :id, :name, params[:team_id]), include_blank: true %>
+      </td>
+      <td><%= submit_tag "Search", :name => nil %></td>
+    </tr>
+  </table>
+<% end %>

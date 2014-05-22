@@ -6,7 +6,7 @@
     <table>
      <thead>
       <tr>
-      <th>Name</th>
+      <th>Name</th><th></th><th></th>
       <th>Level</th>
       <th>Used years</th>
       <th>Member</th>
@@ -20,7 +20,7 @@
      <tbody>
       <% @skills.each do |skill| %>
       <tr>
-        <td><%= skill.name %></td>
+        <td><%= skill.name %></td><td></td><td></td>
         <td><%= skill.level %></td>
         <td><%= skill.used_years %></td>
         <td><%= skill.member_id %></td>
@@ -33,3 +33,4 @@
     </table>   
    
   </ul>
+  <%= will_paginate @skills %>
