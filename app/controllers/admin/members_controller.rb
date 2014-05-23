@@ -7,6 +7,10 @@ class Admin::MembersController < ApplicationController
   end
   def new
     @member = Member.new
+    @projects = Project.all
+    @projects.each do |project|
+      @member.member_projects.build project_id: project.id
+    end
   end
   def create
     @member = Member.new member_params
@@ -46,6 +50,6 @@ class Admin::MembersController < ApplicationController
       redirect_to(root_url) unless current_member.admin?
     end
     def member_params
-      params.require(:member).permit(:name, :email, :password, :password_confirmation)
+      params.require(:member).permit(:name, :email, :password, :password_confirmation, "project_ids" => [])
     end
   end

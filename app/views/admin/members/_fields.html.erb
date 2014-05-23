@@ -9,3 +9,9 @@
 
 <%= f.label :password_confirmation, "Confirm Password" %>
 <%= f.password_field :password_confirmation %>
+
+<%= f.label :project, "Projects joined" %>
+    <% for project in @member.projects %>
+    <%= check_box_tag "member[project_ids][]", project.id %>
+    <%= project.name %>
+<% end %>

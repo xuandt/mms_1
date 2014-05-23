@@ -16,6 +16,7 @@
 
   <tbody>
     <% @members.each do |member| %>
+    <% if !member.team_id.nil? %>
       <tr>
         <td><%= member.name %></td>
         <td><%= member.email %></td>
@@ -24,10 +25,38 @@
         <td><%= link_to 'Destroy', [:admin, member], method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
+    <% end %>
   </tbody>
 </table>
-
 <br>
 
-<%= link_to 'New Member', new_member_path %>
+<h7>Members with no teams</h7>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @members.each do |member| %>
+    <% if member.team_id.nil? %>
+      <tr>
+        <td><%= member.name %></td>
+        <td><%= member.email %></td>
+        <td><%= link_to 'Show', [:admin, member] %></td>
+        <td><%= link_to 'Edit', edit_admin_member_path(member) %></td>
+        <td><%= link_to 'Destroy', [:admin, member], method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    <% end %>
+  </tbody>
+</table>
+<br>
+
+<%= link_to 'New Member', new_admin_member_path %>
 <%= will_paginate @members %>
