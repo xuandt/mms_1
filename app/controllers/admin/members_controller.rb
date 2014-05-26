@@ -11,6 +11,10 @@ class Admin::MembersController < ApplicationController
     @projects.each do |project|
       @member.member_projects.build project_id: project.id
     end
+    @skills = Skill.all
+    @skills.each do |skill|
+      @member.member_skills.build skill_id: skill.id
+    end
   end
   def create
     @member = Member.new member_params
@@ -50,6 +54,6 @@ class Admin::MembersController < ApplicationController
       redirect_to(root_url) unless current_member.admin?
     end
     def member_params
-      params.require(:member).permit(:name, :email, :password, :password_confirmation, "project_ids" => [])
+      params.require(:member).permit(:name, :email, :password, :password_confirmation, "project_ids" => [], member_skills_attributes: [:skill_id, :level, :used_years])
     end
   end

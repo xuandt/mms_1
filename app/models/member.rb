@@ -3,6 +3,10 @@ class Member < ActiveRecord::Base
   belongs_to :team
   has_many :member_projects
   has_many :projects, through: :member_projects
+  has_many :member_skills
+  has_many :skills, through: :member_skills
+  accepts_nested_attributes_for :member_skills, :reject_if => proc { |a| a[:skill_id].blank? }
+
   before_save { self.email = email.downcase }
   attr_accessor :not_validate_password
   before_create :create_remember_token
