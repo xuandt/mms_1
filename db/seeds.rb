@@ -17,8 +17,9 @@ end
   end
   (1..5).each do |k|
     Member.create(name: "Member#{i}#{k}", email: "member#{i}#{k}@example.com", birthday: "12-01-1989", password: "123456", password_confirmation: "123456", admin: '0', team_id: i)
-    (1..5).each do |n|
-        Skill.create(name: "Skill#{k}#{n}")
-    end
   end
+end
+
+(1..5).each do |n|
+    Skill.create(name: "Skill#{n}")
 end

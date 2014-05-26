@@ -10,26 +10,34 @@ class Admin::TeamsController < ApplicationController
   end
   def create
     @team = Team.new team_params
-    if @team.save 
-      flash[:success] = "Create successfully"
+    if @team.save
+      flash[:success] = "Create a new team success!"
+      Activity.create( time: Time.now, action: "Create Team", description: @team.name)
       redirect_to admin_teams_path
+    else
+      render 'new'
     end
   end
   def edit
     @team = Team.find params[:id]
   end
   def update
-    @team= Team.find params[:id]
-    if @team.update_attributes team_params
-      flash[:success] = "Update"
+    @team = Team.find params[:id]
+    if @team.update_attributes(team_params)
+      flash[:success] = "Successful! Team updated."
+      Activity.create( time: Time.now, action: "Update Team", description: @team.name)
       redirect_to admin_team_path
-    else 
+    else
+      flash[:faild] = "Edit faild"
       render 'edit'
     end
   end
   def destroy
-    @team = Team.find(params[:id]).destroy
-    flash[:success] = "Team deleted"
+    team = Team.find (params[:id])
+    Activity.create( time: Time.now, action: "Delete Team", description: team.name)
+    team.destroy
+    flash[:success] = "Team deleted."
+
     redirect_to admin_teams_path
   end
 

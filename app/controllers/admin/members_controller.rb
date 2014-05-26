@@ -1,6 +1,6 @@
 class Admin::MembersController < ApplicationController
   include SessionsHelper
-  before_action :admin_member,     only: :destroy
+
 
   def show
     @member = Member.find params[:id]
@@ -19,8 +19,14 @@ class Admin::MembersController < ApplicationController
   def create
     @member = Member.new member_params
     if @member.save
-       flash[:success] = "Signup successfully"
-       redirect_to admin_member_path
+      Activity.create( time: Time.now, action: "Create Member",
+                                member: @member.id, description: @member.name)
+
+      flash[:success] = "Create Successful!"
+      redirect_to admin_member_path
+    else
+      flash[:faild] = "fail"
+      render 'new'
     end
   end
   def index
@@ -36,23 +42,27 @@ class Admin::MembersController < ApplicationController
     @members = Member.paginate page: params[:page]
   end
   def update
-  	@member = Member.find params[:id]
+    @member = Member.find params[:id]
     if @member.update_attributes member_params
-      flash[:success] = "Profile updated"
+      flash[:success] = "Successful! Profile updated."
+      Activity.create( time: Time.now, action: "Update Member",
+                                member: @member.id, description: @member.name)
       redirect_to admin_member_path
     else
+      flash[:faild] = "Edit faild"
       render 'edit'
     end
   end
   def destroy
-    @member = Member.find(params[:id]).destroy
+    @member = Member.find(params[:id])
+    Activity.create( time: Time.now, action: "Deleted Member",
+                                member: @member.id, description: @member.name)
+    @member.destroy
+   
     flash[:success] = "Member deleted."
     redirect_to admin_members_url
   end
   private
-    def admin_member
-      redirect_to(root_url) unless current_member.admin?
-    end
     def member_params
       params.require(:member).permit(:name, :email, :password, :password_confirmation, "project_ids" => [], member_skills_attributes: [:skill_id, :level, :used_years])
     end

@@ -15,26 +15,33 @@ class Admin::ProjectsController < ApplicationController
   end
   def create
     @project = Project.new project_params
-    if @project.save 
-      flash[:success] = "Create successfully"
+    if @project.save
+      Activity.create( time: Time.now, action: " Create Project",
+                        description: @project.name)
       redirect_to admin_projects_path
+    else
+      render 'new'
     end
   end
   def edit
     @project = Project.find params[:id]
   end
   def update
-    @project= Project.find params[:id]
+     @project = Project.find params[:id]
     if @project.update_attributes project_params
-      flash[:success] = "Update"
+      Activity.create( time: Time.now, action: " Delete Project",
+                        description: @project.name)
+      flash[:success] = "Update done!"
       redirect_to admin_project_path
     else 
       render 'edit'
     end
   end
   def destroy
-    @project = Project.find(params[:id]).destroy
-    flash[:success] = "Project deleted"
+    project= Project.find(params[:id])
+    Activity.create( time: Time.now, action: " Delete Project", description: project.name)
+    project.destroy
+    flash[:success] = "project deleted."
     redirect_to admin_projects_path
   end
 
