@@ -30,6 +30,12 @@ class Admin::MembersController < ApplicationController
     else
       @members = Member.paginate page: params[:page]
     end
+
+    @members = Member.order(:name)
+    respond_to do |format|
+    format.html
+    format.csv { send_data @members.to_csv }
+    end
   end
   def edit
     @member = Member.find params[:id]
@@ -48,6 +54,10 @@ class Admin::MembersController < ApplicationController
     @member = Member.find(params[:id]).destroy
     flash[:success] = "Member deleted."
     redirect_to admin_members_url
+  end
+  def import
+    Member.import(params[:file])
+    redirect_to admin_members_path, notice: "Members imported."
   end
   private
     def admin_member

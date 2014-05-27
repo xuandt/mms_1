@@ -1,0 +1,36 @@
+<div>
+  <%= link_to "Export CSV of Members", admin_members_path(format: "csv") %><br>
+  Import CSV of members
+  <%= form_tag import_admin_members_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+  <% end %><br>
+
+  <%= link_to "Export CSV of Teams", admin_teams_path(format: "csv") %><br>
+  Import CSV of teams
+  <%= form_tag import_admin_teams_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+  <% end %><br>
+
+  <%= link_to "Export CSV of Skills", admin_skills_path(format: "csv") %><br>
+  Import CSV of teams
+  <%= form_tag import_admin_skills_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+  <% end %><br> 
+
+  <%= link_to "Export CSV of Positions", admin_positions_path(format: "csv") %><br>
+  Import CSV of teams
+  <%= form_tag import_admin_positions_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+  <% end %><br>
+
+  <%= link_to "Export CSV of Projects", admin_projects_path(format: "csv") %><br>
+  Import CSV of teams
+  <%= form_tag import_admin_projects_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+  <% end %><br>
+</div><br>

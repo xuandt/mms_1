@@ -4,6 +4,11 @@ class Admin::TeamsController < ApplicationController
   end
   def index
       @teams = Team.paginate page: params[:page]
+      @teams = Team.order(:name)
+      respond_to do |format|
+      format.html
+      format.csv { send_data @teams.to_csv }
+    end
   end
   def new
     @team = Team.new
@@ -32,7 +37,10 @@ class Admin::TeamsController < ApplicationController
     flash[:success] = "Team deleted"
     redirect_to admin_teams_path
   end
-
+  def import
+    Team.import(params[:file])
+    redirect_to admin_teams_path, notice: "Teams imported."
+  end
   private
     def team_params
       params.require(:team).permit(:name, :description, :teamleader)

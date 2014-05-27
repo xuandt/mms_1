@@ -9,6 +9,11 @@ class Admin::ProjectsController < ApplicationController
     else
       @projects = Project.paginate page: params[:page]
     end
+    @projects = Project.order(:name)
+    respond_to do |format|
+    format.html
+    format.csv { send_data @projects.to_csv }
+    end
   end
   def new
     @project = Project.new
@@ -37,7 +42,10 @@ class Admin::ProjectsController < ApplicationController
     flash[:success] = "Project deleted"
     redirect_to admin_projects_path
   end
-
+  def import
+    Project.import(params[:file])
+    redirect_to admin_projects_path, notice: "Projects imported."
+  end
   private
     def project_params
       params.require(:project).permit(:name, :shortname, :start_date, :end_date, :team_id, :project_leader)

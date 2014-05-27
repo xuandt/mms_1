@@ -14,6 +14,11 @@ class Admin::PositionsController < ApplicationController
   end
   def index
   	@positions = Position.paginate page: params[:page]
+    @positions = Position.order(:name)
+    respond_to do |format|
+    format.html
+    format.csv { send_data @positions.to_csv }
+    end
   end
   def edit
   	@position = Position.find params[:id]
@@ -31,6 +36,10 @@ class Admin::PositionsController < ApplicationController
   	@position = Position.find(params[:id]).destroy
   	flash[:success] = "Position deleted"
     redirect_to admin_positions_path
+  end
+  def import
+    Position.import(params[:file])
+    redirect_to admin_positions_path, notice: "Positions imported."
   end
   private
     def position_params

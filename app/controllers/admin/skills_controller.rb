@@ -4,6 +4,11 @@ class Admin::SkillsController < ApplicationController
   end
   def index
       @skills = Skill.paginate page: params[:page]
+      @skills = Skill.order(:name)
+      respond_to do |format|
+      format.html
+      format.csv { send_data @skills.to_csv }
+    end
   end
   def new
     @skill = Skill.new
@@ -32,7 +37,10 @@ class Admin::SkillsController < ApplicationController
     flash[:success] = "Skill deleted"
     redirect_to admin_skills_path
   end
-
+  def import
+    Skill.import(params[:file])
+    redirect_to admin_skills_path, notice: "Skills imported."
+  end
   private
     def skill_params
       params.require(:skill).permit(:name, :member_id, :level, :used_years)
