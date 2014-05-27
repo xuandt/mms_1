@@ -11,10 +11,33 @@
       <%= f.text_field :email %>
 
       <%= f.label :project, "Projects joined" %>
-         <% @projects.each do |project| %>
+         <% for project in @projects %>
          <%= check_box_tag "member[project_ids][]", project.id %>
          <%= project.name %>
       <% end %>
+
+      <%= f.label :skill %>
+      <table style="text-align: center" border="1">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Skill Name</th>
+            <th>Skill Level</th>
+            <th>Used years</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= f.fields_for :member_skills, @member.member_skills do |builder| %>
+            <tr>
+              <td><%= builder.check_box :skill_id, {checked: !builder.object.skill.id.present? },
+                builder.object.skill.id, ""%></td>
+              <td><%= builder.object.skill.try(:name) %></td>
+              <td><%= builder.text_field :level %></td>
+              <td><%= builder.text_field :used_years %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
 
       <%= f.label :password %>
       <%= f.password_field :password %>
